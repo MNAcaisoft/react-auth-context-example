@@ -17,18 +17,17 @@ class StatefulProvider extends React.Component {
       login: this.login,
       logout: this.logout
     };
-    this.authClient = props.client;
   }
 
   login = async (email, password) => {
     // custom logic
     console.log("logging in via Context", email, password);
 
-    await this.authClient.login(email, password);
+    await this.props.client.login(email, password);
 
-    if (this.authClient.isAuthenticated()) {
+    if (this.props.client.isAuthenticated()) {
       this.setState({
-        user: this.authClient.user,
+        user: this.props.client.user,
         isAuthenticated: true
       });
     } else {
@@ -40,7 +39,7 @@ class StatefulProvider extends React.Component {
     // custom logic
     console.log("logging out via Context");
 
-    await this.authClient.logout();
+    await this.props.client.logout();
     this.setState({ isAuthenticated: false });
   };
 
